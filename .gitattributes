@@ -1,0 +1,5 @@
+* text=auto eol=lf
+# Evidencias e amostras NUNCA podem ser convertidas pelo git (o hash mudaria)
+labs/**/evidencias/** -text
+labs/**/amostra/** -text
+*.png binary

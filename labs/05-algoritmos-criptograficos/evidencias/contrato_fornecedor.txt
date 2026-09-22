@@ -1,0 +1,15 @@
+CONTRATO DE PRESTACAO DE SERVICOS N. 2026/041
+
+CONTRATANTE: Empresa Exemplo Ltda. (ficticia)
+CONTRATADA: Fornecedora Alfa Servicos ME (ficticia)
+
+CLAUSULA 1 - DO OBJETO
+Prestacao de servicos de manutencao de infraestrutura de TI.
+
+CLAUSULA 2 - DO VALOR
+O valor mensal sera de R$ 18.500,00 (dezoito mil e quinhentos reais).
+
+CLAUSULA 3 - DA VIGENCIA
+12 (doze) meses a partir de 01/03/2026.
+
+Sao Paulo, 15 de fevereiro de 2026.

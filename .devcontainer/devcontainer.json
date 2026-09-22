@@ -1,0 +1,10 @@
+{
+  "name": "Labs - Auditoria Forense de Sistemas Digitais (UNINOVE)",
+  "build": { "dockerfile": "Dockerfile" },
+  "postCreateCommand": "bash scripts/verificar_ambiente.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-vscode.hexeditor"]
+    }
+  }
+}
