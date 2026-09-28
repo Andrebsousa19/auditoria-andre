@@ -23,7 +23,7 @@ Executar uma auditoria simples: comparar a configuração de um servidor com **c
 ## 🧪 Passo a passo
 
 ```bash
-cd /workspaces/*/labs/01-auditoria-de-controles
+cd /workspaces/*/bslabs/01-auditoria-de-controles
 bash preparar.sh
 tree saida/servidor
 ```
@@ -70,13 +70,13 @@ sha256sum saida/evidencias_auditoria.txt | tee saida/evidencias_auditoria.sha256
 
 | Critério | Evidência (comando + resultado) | Conforme? | NC |
 |---|---|---|---|
-| C1 | | | |
-| C2 | | | |
-| C3 | | | |
-| C4 | | | |
+| C1 | `awk -F: '$3 == 0 {print $1, "-> UID", $3}' saida/servidor/etc/passwd` → `root -> UID 0`; `suporte -> UID 0` | Não | NC-01 |
+| C2 | `awk -F: '$2 == "" {print "SEM SENHA:", $1}' saida/servidor/etc/shadow` → `SEM SENHA: suporte` | Não | NC-01 |
+| C3 | `find saida/servidor/financeiro -type f -perm -o+w` → `saida/servidor/financeiro/pagamentos.csv` | Não | NC-02 |
+| C4 | `grep -i "desligad" saida/servidor/etc/passwd` → `estagiario2024` consta como desligado em 2024 | Não | NC-03 |
 
 ## ❓ Perguntas
-1. Qual conta viola dois critérios ao mesmo tempo? Qual o risco?
-2. Escreva a **NC-01** de forma clara, firme e objetiva (fato, critério e efeito).
-3. Por que a auditoria foi feita numa **cópia** das configurações, e não no servidor em produção?
-4. Qual recomendação você faria para cada não conformidade?
+1. A conta `suporte` viola dois critérios: C1, porque possui UID 0, e C2, porque está sem senha. O risco é permitir acesso não autenticado com privilégio máximo, possibilitando o comprometimento total do servidor.
+2. **NC-01:** Foi identificada a conta `suporte` com UID 0 e campo de senha vazio. Isso descumpre C1, que reserva o UID 0 exclusivamente à conta `root`, e C2, que proíbe contas sem senha. Essa situação pode permitir acesso não autenticado com privilégio máximo, comprometendo a confidencialidade, a integridade e a disponibilidade dos dados.
+3. A auditoria foi realizada em uma cópia para preservar o servidor e as configurações originais, evitar alterações ou interrupções no ambiente de produção e permitir a repetição dos testes. Dessa forma, as evidências originais permanecem íntegras.
+4. **NC-01:** retirar o UID 0 da conta `suporte`, conceder somente os privilégios necessários e configurar uma autenticação forte ou bloquear a conta até sua regularização. **NC-02:** remover a permissão de escrita para “outros” de `pagamentos.csv` e restringir o acesso aos usuários ou grupos autorizados. **NC-03:** desativar e remover a conta `estagiario2024`, revogar suas credenciais e preservar ou transferir seus arquivos antes da remoção, conforme a política da empresa.
